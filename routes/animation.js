@@ -16,6 +16,7 @@ var router = express.Router();
 const {promiseToGetItems} = require('./dataPromisesHelpers.js');
 
 
+// TODO: doch nicht immer 'from the past 50 minutes', da zeitschrittlänge konfigurierbar ist?
 /**
  * This retrieves weather events from the past 50 minutes and gives the to the result object.
  * @param req - request
@@ -59,12 +60,12 @@ var previousWeather = function(req, res) {
                             if (!arrayOfTimestamps.includes(timestamp)) {
                                 arrayOfTimestamps.push(timestamp);
                             }
-                        })
+                        });
                     });
                     // if the response includes more than 10 timestamp only choose the 10 most recent ones
                     if (arrayOfTimestamps.length > 10) {
                         arrayOfTimestamps.sort(function (a, b) {
-                            return a - b
+                            return a - b;
                         });
                         arrayOfTimestamps = arrayOfTimestamps.slice(0, 9);
                     }

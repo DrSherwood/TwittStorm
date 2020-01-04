@@ -37,7 +37,7 @@ const getWarningsForTime = function(req, res, next) {
 
     // TODO: überprüfen, ob < oder > oder = passt (serverseitig)
 
-    // 10 timesteps = 50 minutes = 3000000 milliseconds
+    //
     let timestampDeleting = currentTimestamp - config.max_difference_timestamp;
 
     promiseToUpdateItems({type: "unwetter"}, {"$pull": {"timestamps": {"$lt": timestampDeleting}}},
@@ -88,13 +88,14 @@ const getWarningsForTime = function(req, res, next) {
       .then(function () {
 
 
-        // TODO: currentTimestamp in config-yaml speichern!!
+        // TODO: currentTimestamp in 'timestamp_last_Unwetter_request' in config.yaml speichern!!
         // currentTimestamp
 
-        // serverseitig, da require yaml nötig ist
-        // ist serverseitig passend, da Unwetter eh vom Server requested werden (müssen)!!
 
-// JSON with the query for getting only all current Unwetter out of database
+        // TODO: auch für radar und 'timestamp_last_radar_request' machen
+
+
+        // JSON with the query for getting only all current Unwetter out of database
         let query = {
           "type": "unwetter",
           "properties.onset": {"$lt": JSON.parse(currentTimestamp)},
